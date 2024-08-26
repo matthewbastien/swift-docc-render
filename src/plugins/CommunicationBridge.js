@@ -85,7 +85,7 @@ export default {
   install(Vue, options) {
     let backend;
 
-    if (options.performanceMetricsEnabled || options.appTarget === 'ide') {
+    if (options.performanceMetricsEnabled || options.appTarget === 'ide' || process.env.VUE_APP_ROUTER_MODE === 'memory') {
       backend = new WebKitBackend();
     } else {
       backend = new NullBackend();

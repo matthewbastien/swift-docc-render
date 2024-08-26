@@ -17,11 +17,10 @@ import directives from '../directives';
  * This is the SwiftDocCRenderPlugin, which attaches things to the Vue instance
  * Attach all Swift-DocC-Render helpers into the Vue object.
  */
-export default function SwiftDocCRenderPlugin(Vue, {
-  performanceMetrics = false,
-} = {}) {
+export default function SwiftDocCRenderPlugin(Vue) {
   /* eslint-disable no-param-reassign */
   Vue.config.productionTip = false;
+  const performanceMetrics = process.env.VUE_APP_PERFORMANCE_ENABLED === 'true';
 
   Vue.use(CustomComponents);
 

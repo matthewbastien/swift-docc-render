@@ -13,11 +13,11 @@
 body {
   color-scheme: light dark;
 
-  &[data-color-scheme="light"] {
+  &.vscode-light, &.vscode-high-contrast-l {
     color-scheme: light;
   }
 
-  &[data-color-scheme="dark"] {
+  &.vscode-dark, &.vscode-high-contrast {
     color-scheme: dark;
   }
 }
@@ -25,15 +25,15 @@ body {
 body {
   @include color-vars-light;
 
-  &[data-color-scheme="dark"] {
+  &.vscode-dark, &.vscode-high-contrast {
     @media screen {
       @include color-vars-dark;
     }
   }
+}
 
-  @media screen and (prefers-color-scheme: dark) {
-    &[data-color-scheme="auto"] {
-      @include color-vars-dark;
-    }
-  }
+// VSCode has some default formatting for code blocks that we should get rid of
+code {
+  background-color: inherit;
+  border: none;
 }

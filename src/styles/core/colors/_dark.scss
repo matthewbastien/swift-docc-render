@@ -31,12 +31,13 @@
   --color-figure-orange: #{dark-color(figure-orange)};
   --color-figure-red: #{dark-color(figure-red)};
   --color-tutorials-teal: #{dark-color(tutorials-teal)};
-
+  --color-focus-color: color-mix(in srgb, var(--color-link), black 20%);
   --color-article-body-background: rgb(17, 17, 17);
   --color-badge-text: #{light-color(figure-gray)};
   --color-badge-default: var(--color-badge-dark-default);
   --color-button-background-active: #{dark-color(fill-blue)};
   --color-code-line-highlight: #{change-color(dark-color(figure-blue), $alpha: 0.08)};
+  --color-code-plain: #{dark-color(fill-quaternary)};
   --color-dropdown-background: var(--color-dropdown-dark-background);
   --color-dropdown-border: var(--color-dropdown-dark-border);
   --color-dropdown-option-text: var(--color-dropdown-dark-option-text);
@@ -87,10 +88,10 @@
   --color-syntax-type-declarations: rgb(107, 223, 255);
   --color-syntax-urls: rgb(102, 153, 255);
   --color-tutorial-background: var(--color-fill-tertiary);
-  --color-navigator-item-hover: #{change-color(dark-color(fill-blue), $alpha: 0.5)};
+  --color-navigator-item-hover: var(--vscode-list-activeSelectionBackground);
 
-  --color-card-shadow: #{change-color(light-color(fill), $alpha: 0.04)};
-  --color-link-block-card-border: #{change-color(light-color(fill), $alpha: 0.25)};
+  --color-card-shadow: #{light-color(fill)};
+  --color-link-block-card-border: #{light-color(fill)};
 
   --color-standard-red: #8B0000;
   --color-standard-orange: #8B4000;
@@ -100,3 +101,4 @@
   --color-standard-purple: #512B55;
   --color-standard-gray: #{dark-color(fill-tertiary)};
 }
+

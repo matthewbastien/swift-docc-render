@@ -27,16 +27,16 @@ $base-colors: (
     dark: rgb(0, 153, 255)
   ),
   fill: (
-    light: rgb(255, 255, 255),
-    dark: rgb(0, 0, 0)
+    light: var(--vscode-editor-background),
+    dark: var(--vscode-editor-background)
   ),
   fill-secondary: (
-    light: rgb(247, 247, 247),
-    dark: rgb(22, 22, 22)
+    light: color-mix(in srgb, var(--vscode-editor-background), black 10%),
+    dark: color-mix(in srgb, var(--vscode-editor-background), white 10%)
   ),
   fill-tertiary: (
-    light: rgb(240, 240, 240),
-    dark: rgb(42, 42, 42)
+    light: color-mix(in srgb, var(--vscode-editor-background), black 30%),
+    dark: color-mix(in srgb, var(--vscode-editor-background), white 30%)
   ),
   fill-quaternary: rgb(40, 40, 40),
   fill-gray-tertiary: (

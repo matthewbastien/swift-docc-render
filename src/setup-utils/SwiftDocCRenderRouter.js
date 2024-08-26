@@ -32,7 +32,7 @@ const defaultRoutes = [
 
 export default function createRouterInstance(routerConfig = {}) {
   const router = new Router({
-    mode: 'history',
+    mode: process.env.VUE_APP_ROUTER_MODE === 'memory' ? 'abstract' : 'history',
     base: baseUrl,
     scrollBehavior,
     ...routerConfig,
@@ -46,7 +46,15 @@ export default function createRouterInstance(routerConfig = {}) {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-    restoreScrollOnReload();
+    restoreScrollOnReload(router);
+    // scrollBehavior doesn't work when router is in abstract mode
+    if (process.env.VUE_APP_ROUTER_MODE === 'memory') {
+      router.afterEach(async (to, from) => {
+        const { x: left, y: top } = await scrollBehavior(to, from, null);
+        window.scrollTo({ left, top });
+        window.bridge.send({ type: 'navigation', data: to.path });
+      });
+    }
   });
 
   if (process.env.VUE_APP_TARGET !== 'ide') {
@@ -60,7 +68,15 @@ export default function createRouterInstance(routerConfig = {}) {
   }
 
   // save the scrollPosition when we quit the tab. eg: reload
-  window.addEventListener('unload', saveScrollOnReload);
+  window.addEventListener('unload', () => saveScrollOnReload(router));
+
+  // Set the initial route based on the contents of the window
+  if (process.env.VUE_APP_ROUTER_MODE === 'memory') {
+    if (window.initialRoute) {
+      router.push(window.initialRoute);
+      window.bridge.send({ type: 'navigation', data: window.initialRoute });
+    }
+  }
 
   return router;
 }

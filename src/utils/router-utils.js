@@ -19,15 +19,6 @@ import { cssEscapeTopicIdHash } from 'docc-render/utils/strings';
 import { areEquivalentLocations } from 'docc-render/utils/url-helper';
 import getExtraScrollOffset from 'theme/utils/scroll-offset';
 
-/**
- * Returns the current absolute location, eg: '/tutorials/swiftui/something'
- * @returns {string}
- */
-export function getCurrentLocation() {
-  const { location } = window;
-  return location.pathname + location.search + location.hash;
-}
-
 function getBaseNavOffset() {
   const viewportWidth = Math.max(
     document.documentElement.clientWidth || 0,
@@ -73,7 +64,7 @@ export async function scrollBehavior(to, from, savedPosition) {
   return { x: 0, y: 0 };
 }
 
-export async function restoreScrollOnReload() {
+export async function restoreScrollOnReload(router) {
   let scrollPosition = window.sessionStorage.getItem('scrollPosition');
   if (!scrollPosition) return;
   try {
@@ -85,7 +76,7 @@ export async function restoreScrollOnReload() {
 
   // in case any guard redirect somewhere else on initial navigation
   // we must ensure we are on the same page before the reload
-  if (getCurrentLocation() === scrollPosition.location) {
+  if (router.currentRoute.path === scrollPosition.location) {
     // one tick for the page to render
     // a second tick for the data to be rendered
     await waitFrames(2);
@@ -93,7 +84,7 @@ export async function restoreScrollOnReload() {
   }
 }
 
-export function saveScrollOnReload() {
+export function saveScrollOnReload(router) {
   // avoid saving a location if an explicit hash selector is provided
   if (window.location.hash) return;
   sessionStorage.setItem(
@@ -101,7 +92,7 @@ export function saveScrollOnReload() {
     JSON.stringify({
       x: window.pageXOffset,
       y: window.pageYOffset,
-      location: getCurrentLocation(),
+      location: router.currentRoute.path,
     }),
   );
 }
